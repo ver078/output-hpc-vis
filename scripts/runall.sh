@@ -8,12 +8,12 @@
 ##SBATCH --mail-user=shaun.verrall@csiro.au
 
 
-inputdir=/OSM/CBR/AF_DATASCHOOL/input/2019-04-12_Transcritome
-outputdir=/OSM/CBR/AF_DATASCHOOL/output/ver078
+inputdir=/OSM/CBR/PI_CAPS/work/ver078/test
+outputdir=/OSM/CBR/PI_CAPS/work/ver078/output
 
 
 
-for filename in $inputdir/*.csv
+for filename in $inputdir/*.RData
 do
    echo $filename
    sbatch ./singlefile.sh $filename $outputdir

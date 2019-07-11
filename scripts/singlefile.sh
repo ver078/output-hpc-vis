@@ -9,5 +9,5 @@ module load R
 
 # run the R command line
 
-Rscript ./filterRData.R $1 -o $2
+Rscript ./filterRData.R -f $1 -o $2
 
