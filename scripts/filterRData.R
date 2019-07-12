@@ -1,12 +1,42 @@
+#!/usr/bin/env Rscript
 
 library(tidyverse)
 
-inputdir <- "./data/"
-inputfile <- "00e2ced275084228a4922c614e31dad7.RData"
-inputpath <- paste(inputdir,inputfile, sep="")
+#Read in arguments passed to this file
+library(optparse)
 
-inputname <- strsplit(inputfile, ".", fixed=TRUE)
-inputname2 <- inputname[[1]][1]
+option_list = list(
+  make_option(c("-f", "--file"), type="character", default=NULL, 
+              help="dataset file name", metavar="character"),
+  make_option(c("-o", "--out"), type="character", default=NULL, 
+              help="directory to put output files", metavar="character")
+); 
+
+opt_parser = OptionParser(option_list=option_list);
+opt = parse_args(opt_parser);
+
+if (is.null(opt$file)){
+  print_help(opt_parser)
+  stop("At least one argument must be supplied (input file).n", call.=FALSE)
+}
+if (is.null(opt$out)){
+  print_help(opt_parser)
+  stop("At least one argument must be supplied (output directory).n", call.=FALSE)
+}
+
+inputpath <- opt$input
+outputdir <- opt$out
+
+inputfile_temp <- strsplit(inputfile, "'\'", fixed=TRUE)
+inputfile <- inputname_temp[[1]][length(inputfile_temp)]
+inputdir <- paste()
+
+# inputdir <- "./data/"
+# inputfile <- "00e2ced275084228a4922c614e31dad7.RData"
+# inputpath <- paste(inputdir,inputfile, sep="")
+
+inputname_temp <- strsplit(inputfile, ".", fixed=TRUE)
+inputname <- inputname_temp[[1]][1]
 
 outputdir <- "./data/"
 
@@ -29,7 +59,7 @@ for (sim in res) {
   if (num_rows >= 1) {
     
     #set the output name to the input name with simulation index added to the end
-    outputname <- paste(inputname2,"_",index, sep="")
+    outputname <- paste(inputname,"_",index, sep="")
     
     sim_filtered <- list(metadata = metadata, data_filtered = data_filtered, num_rows = num_rows)
 
